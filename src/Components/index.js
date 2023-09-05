@@ -1,0 +1,10 @@
+export { Header } from './Header/Header';
+export { Menu } from './Menu/Menu';
+export { Slider } from './Slider/Slider';
+export { Products } from './Products/Products';
+export { Product } from './Product/Product';
+export { SingleProduct } from './Products/SingleProduct';
+export { Category } from './Category/Category';
+export { Categories } from './Category/Categiries';
+export { SingleCategory } from './Category/SingleCategory';
+export { AppRoutes } from './Routes/Routes';
