@@ -1535,3 +1535,8 @@ section
 	background: #e4e4e4;
 	padding: 12px;
 }
+
+.error {
+	color: #dc3545;
+	margin-top: 4px;
+}
