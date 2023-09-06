@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useGetProductsQuery } from '../../redux/api/apiSlice';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Header = ({ active, setActive }) => {
+  const { isAuth } = useAuth();
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const { cart } = useSelector(({ user }) => user);
@@ -25,63 +27,67 @@ export const Header = ({ active, setActive }) => {
                 <div className="logo">
                   <Link to="/">Sublime.</Link>
                 </div>
-                <nav className="main_nav">
-                  <ul>
-                    <li className="hassubs active">
-                      <Link to="/categories">Categories</Link>
+                {isAuth ? (
+                  <>
+                    <nav className="main_nav">
                       <ul>
-                        {list.map(({ id, name }) => (
-                          <li key={id}>
-                            <NavLink to={`/categories/${id}`}>{name}</NavLink>
-                          </li>
-                        ))}
+                        <li className="hassubs active">
+                          <Link to="/categories">Categories</Link>
+                          <ul>
+                            {list.map(({ id, name }) => (
+                              <li key={id}>
+                                <NavLink to={`/categories/${id}`}>
+                                  {name}
+                                </NavLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                        <li>
+                          <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                          <Link to="/signIn">SignIn/SignUp</Link>
+                        </li>
                       </ul>
-                    </li>
-                    <li>
-                      <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                      <Link to="/signIn">SignIn/SignUp</Link>
-                    </li>
-                  </ul>
-                </nav>
-                <div className="header_extra ml-auto header_menu-margin">
-                  <div className="shopping_cart">
-                    <Link to="/cart">
-                      <svg
-                        version="1.1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 489 489"
-                      >
-                        <g>
-                          <path
-                            d="M440.1,422.7l-28-315.3c-0.6-7-6.5-12.3-13.4-12.3h-57.6C340.3,42.5,297.3,0,244.5,0s-95.8,42.5-96.6,95.1H90.3
+                    </nav>
+                    <div className="header_extra ml-auto header_menu-margin">
+                      <div className="shopping_cart">
+                        <Link to="/cart">
+                          <svg
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 489 489"
+                          >
+                            <g>
+                              <path
+                                d="M440.1,422.7l-28-315.3c-0.6-7-6.5-12.3-13.4-12.3h-57.6C340.3,42.5,297.3,0,244.5,0s-95.8,42.5-96.6,95.1H90.3
 													c-7,0-12.8,5.3-13.4,12.3l-28,315.3c0,0.4-0.1,0.8-0.1,1.2c0,35.9,32.9,65.1,73.4,65.1h244.6c40.5,0,73.4-29.2,73.4-65.1
 													C440.2,423.5,440.2,423.1,440.1,422.7z M244.5,27c37.9,0,68.8,30.4,69.6,68.1H174.9C175.7,57.4,206.6,27,244.5,27z M366.8,462
 													H122.2c-25.4,0-46-16.8-46.4-37.5l26.8-302.3h45.2v41c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5v-41h139.3v41
 													c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5v-41h45.2l26.9,302.3C412.8,445.2,392.1,462,366.8,462z"
-                          />
-                        </g>
-                      </svg>
-                      <div>
-                        Cart {!!cart.length && <span>({cart.length})</span>}
+                              />
+                            </g>
+                          </svg>
+                          <div>
+                            Cart {!!cart.length && <span>({cart.length})</span>}
+                          </div>
+                        </Link>
                       </div>
-                    </Link>
-                  </div>
-                  <div
-                    className="search"
-                    onClick={() => setActiveSearch(!activeSearch)}
-                  >
-                    <div className="search_icon">
-                      <svg
-                        version="1.1"
-                        id="Capa_1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 475.084 475.084"
+                      <div
+                        className="search"
+                        onClick={() => setActiveSearch(!activeSearch)}
                       >
-                        <g>
-                          <path
-                            d="M464.524,412.846l-97.929-97.925c23.6-34.068,35.406-72.047,35.406-113.917c0-27.218-5.284-53.249-15.852-78.087
+                        <div className="search_icon">
+                          <svg
+                            version="1.1"
+                            id="Capa_1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 475.084 475.084"
+                          >
+                            <g>
+                              <path
+                                d="M464.524,412.846l-97.929-97.925c23.6-34.068,35.406-72.047,35.406-113.917c0-27.218-5.284-53.249-15.852-78.087
 												c-10.561-24.842-24.838-46.254-42.825-64.241c-17.987-17.987-39.396-32.264-64.233-42.826
 												C254.246,5.285,228.217,0.003,200.999,0.003c-27.216,0-53.247,5.282-78.085,15.847C98.072,26.412,76.66,40.689,58.673,58.676
 												c-17.989,17.987-32.264,39.403-42.827,64.241C5.282,147.758,0,173.786,0,201.004c0,27.216,5.282,53.238,15.846,78.083
@@ -92,15 +98,22 @@ export const Header = ({ active, setActive }) => {
 												c-25.031-25.029-37.546-55.144-37.546-90.36c0-35.21,12.518-65.334,37.546-90.36c25.026-25.032,55.15-37.546,90.36-37.546
 												c35.212,0,65.331,12.519,90.364,37.546c25.033,25.026,37.548,55.15,37.548,90.36C328.911,236.214,316.392,266.329,291.363,291.358z
 												"
-                          />
-                        </g>
-                      </svg>
+                              />
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                      <div
+                        className="hamburger"
+                        onClick={() => setActive(!active)}
+                      >
+                        <i className="fa fa-bars" aria-hidden="true"></i>
+                      </div>
                     </div>
-                  </div>
-                  <div className="hamburger" onClick={() => setActive(!active)}>
-                    <i className="fa fa-bars" aria-hidden="true"></i>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
