@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useGetProductsQuery } from '../../redux/api/apiSlice';
 import { useAuth } from '../../hooks/useAuth';
+import { removeUser } from '../../redux/slices/userSlice';
 
 export const Header = ({ active, setActive }) => {
   const { isAuth } = useAuth();
+  const dispatch = useDispatch();
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const { cart } = useSelector(({ user }) => user);
@@ -15,6 +17,10 @@ export const Header = ({ active, setActive }) => {
 
   const handleSearch = ({ target: { value } }) => {
     setSearchValue(value);
+  };
+
+  const logOut = () => {
+    dispatch(removeUser());
   };
 
   return (
@@ -47,7 +53,13 @@ export const Header = ({ active, setActive }) => {
                           <Link to="/">Home</Link>
                         </li>
                         <li>
-                          <Link to="/signIn">SignIn/SignUp</Link>
+                          {isAuth ? (
+                            <button onClick={logOut} className="logout__button">
+                              Log out
+                            </button>
+                          ) : (
+                            <Link to="/signIn">SignIn/SignUp</Link>
+                          )}
                         </li>
                       </ul>
                     </nav>

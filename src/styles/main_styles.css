@@ -1540,3 +1540,23 @@ section
 	color: #dc3545;
 	margin-top: 4px;
 }
+
+.logout__button {
+	font-size: 16px;
+	font-weight: 600;
+	color: #767676;
+	transition: all 200ms ease;
+	border: none;
+	background: #FFFFFF;
+}
+
+.logout__button--mob {
+	border: none;
+	color: #1b1b1b;
+	font-weight: 700;
+	line-height: 50px;
+	height: 50px;
+	font-size: 16px;
+	transition: all 200ms ease;
+	background: #e4e4e4;
+ }

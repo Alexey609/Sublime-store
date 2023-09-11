@@ -390,6 +390,9 @@
 	{
 		font-size: 24px;
 	}
+	.logout__button--mob {
+		font-size: 13px;
+	}
 }
 
 /************

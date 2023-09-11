@@ -1,7 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../../hooks/useAuth';
+import { removeUser } from '../../redux/slices/userSlice';
 
 export const Menu = ({ active, setActive }) => {
+  const { isAuth } = useAuth();
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch(removeUser());
+  };
+
   return (
     <div
       className={
@@ -10,16 +20,6 @@ export const Menu = ({ active, setActive }) => {
     >
       <div className="menu_container menu_mm">
         <div className="page_menu_content">
-          <div className="page_menu_search menu_mm">
-            <form>
-              <input
-                type="search"
-                required="required"
-                className="page_menu_search_input menu_mm"
-                placeholder="Search for products..."
-              />
-            </form>
-          </div>
           <ul className="page_menu_nav menu_mm">
             <li className="page_menu_item menu_mm">
               <Link to="/">
@@ -32,9 +32,15 @@ export const Menu = ({ active, setActive }) => {
               </Link>
             </li>
             <li className="page_menu_item menu_mm">
-              <Link to="/signIn">
-                SignIn/SignUp<i className="fa fa-angle-down"></i>
-              </Link>
+              {isAuth ? (
+                <button onClick={logOut} className="logout__button--mob">
+                  Log out
+                </button>
+              ) : (
+                <Link to="/signIn">
+                  SignIn/SignUp<i className="fa fa-angle-down"></i>
+                </Link>
+              )}
             </li>
           </ul>
         </div>
