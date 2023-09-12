@@ -10,12 +10,12 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<PrivateRoute />}>
-        <Route index element={<Home />} />
         <Route path={ROUTES.CART} element={<Cart />} />
         <Route path={ROUTES.CATEGORIES} element={<Categories />} />
         <Route path={ROUTES.CATEGORY} element={<SingleCategory />} />
         <Route path={ROUTES.PRODUCT} element={<SingleProduct />} />
       </Route>
+      <Route index element={<Home />} />
       <Route path={ROUTES.SIGNUP} element={<SignUp />} />
       <Route path={ROUTES.SIGNING} element={<SignIn />} />
     </Routes>
